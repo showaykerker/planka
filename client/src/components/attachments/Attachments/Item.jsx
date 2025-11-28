@@ -18,6 +18,7 @@ import ItemContent from './ItemContent';
 import ContentViewer from './ContentViewer';
 import PdfViewer from './PdfViewer';
 import CsvViewer from './CsvViewer';
+import PresentationViewer from './PresentationViewer';
 
 import styles from './Item.module.scss';
 
@@ -48,6 +49,17 @@ const Item = React.memo(({ id, isVisible }) => {
           );
 
           break;
+        case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+        case 'application/vnd.ms-powerpoint':
+        case 'application/vnd.oasis.opendocument.presentation':
+          content = (
+            <PresentationViewer
+              src={attachment.data.url}
+              className={classNames(styles.content, styles.contentViewer)}
+            />
+          );
+
+          break;
         case 'audio/mpeg':
         case 'audio/wav':
         case 'audio/ogg':
@@ -56,7 +68,11 @@ const Item = React.memo(({ id, isVisible }) => {
         case 'audio/x-aac':
           content = (
             // eslint-disable-next-line jsx-a11y/media-has-caption
-            <audio controls src={attachment.data.url} className={styles.content} />
+            <audio
+              controls
+              src={attachment.data.url}
+              className={classNames(styles.content, styles.contentViewer)}
+            />
           );
 
           break;
@@ -74,7 +90,11 @@ const Item = React.memo(({ id, isVisible }) => {
         case 'video/webm':
           content = (
             // eslint-disable-next-line jsx-a11y/media-has-caption
-            <video controls src={attachment.data.url} className={styles.content} />
+            <video
+              controls
+              src={attachment.data.url}
+              className={classNames(styles.content, styles.contentViewer)}
+            />
           );
 
           break;
